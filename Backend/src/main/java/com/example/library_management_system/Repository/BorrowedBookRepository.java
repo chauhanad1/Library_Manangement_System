@@ -6,8 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
+
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -17,6 +23,17 @@ public class BorrowedBookRepository implements JpaRepository<Borrowed_Books, Int
     public void flush() {
 
     }
+    @Modifying
+    @Query("Update Borrowed_Books set borrow_date = :borrow_date where copy_id =:copy_id and user_id =:user_id and return_date =:return_date")
+    public void updateBorrowTable(@Param("borrow_date") Timestamp borrow_date,
+                                  @Param("return_date") Timestamp return_date,
+                                  @Param("copy_id") int copy_id,
+                                  @Param("book_id") int book_id);
+
+    @Modifying
+    @Query("select b from Borrowed_Books b where copy_id =:copy_id and user_id =:user_id")
+    public Borrowed_Books getBorrowedBooks(@Param("copy_id") int copy_id
+                                           ,@Param("user_id") int user_id);
 
     @Override
     public <S extends Borrowed_Books> S saveAndFlush(S entity) {

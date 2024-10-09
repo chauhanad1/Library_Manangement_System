@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.cglib.core.Local;
 
 import java.awt.print.Book;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -25,18 +27,18 @@ public class Borrowed_Books {
     @JoinColumn(name = "copy_id")
     private Book_Copies bookcopy;
     @Column(name = "borrow_date", nullable = false)
-    private LocalDate borrowDate;
+    private Timestamp borrowDate;
     @Column(name = "return_date")
-    private LocalDate returnDate;
+    private Timestamp returnDate;
 
     public Borrowed_Books(){
-        this.borrowDate = LocalDate.now();
+        this.borrowDate = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Borrowed_Books(Users user, Book_Copies bookcopy){
         this.user = user;
         this.bookcopy = bookcopy;
-        this.borrowDate = LocalDate.now();
+        this.borrowDate = Timestamp.valueOf(LocalDateTime.now());
     }
 
 

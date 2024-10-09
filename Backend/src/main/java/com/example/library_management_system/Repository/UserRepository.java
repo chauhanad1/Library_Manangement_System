@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +22,10 @@ public class UserRepository implements JpaRepository<Users,Integer> {
     public void flush() {
 
     }
+
+    @Modifying
+    @Query("UPDATE Users set borrowed_book_count = :borrowed_book_count where user_id = user_id")
+    public void changeBorrowCount(@Param("borrowed_book_count") int borrowed_book_count, @Param("user_id") int user_id);
 
     @Override
     public <S extends Users> S saveAndFlush(S entity) {

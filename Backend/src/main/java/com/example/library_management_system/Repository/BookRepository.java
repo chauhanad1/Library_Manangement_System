@@ -5,7 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.library_management_system.Entity.Books;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,10 +22,16 @@ public class BookRepository implements JpaRepository<Books, Integer> {
 
     }
 
+    @Modifying
+    @Query("UPDATE Books set available_copies =:available_copies where book_id =:book_id")
+    public void changeAvailableCopies(@Param("available_copies") int available_copies, @Param("book_id") int book_id);
     @Override
     public <S extends Books> S saveAndFlush(S entity) {
         return null;
     }
+    @Query("SELECT b from books b join b.BookCopies bc where bc.copy_id =:copy_id")
+    public Books getBookbyCopyId(@Param("copy_id") int copy_id);
+
 
     @Override
     public <S extends Books> List<S> saveAllAndFlush(Iterable<S> entities) {

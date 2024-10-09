@@ -4,8 +4,14 @@ import com.example.library_management_system.Entity.Books;
 
 import java.awt.print.Book;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
     List<Books> getAllBooks();
-    Book getBookbyId(int bookId);
+    Books getBookbyId(int bookId);
+    int getBookCopyID(int bookId);
+    void changeBorrowStatus(boolean borrowed_status, int copy_id);
+    void changeAvailableCopies(int available_copies, int book_id);
+
+    Books getBookbyCopyId(int copy_id);
 }

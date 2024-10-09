@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,13 +18,17 @@ import java.util.function.Function;
 public class LibraryTransaction implements JpaRepository<Library_Transactions, Integer> {
     @Override
     public void flush() {
-
     }
 
-    @Override
-    public <S extends Library_Transactions> S saveAndFlush(S entity) {
-        return null;
-    }
+    @Query("SLECT lt from Library_Transactions lt where user_id =:user_id and copy_id =:copy_id")
+    public Library_Transactions getLibraryTransactions(@Param("user_id") int user_id, @Param("copy_id") int copy_id);
+
+//    @Modifying
+//    @Query("UPDATE Library_Transactions set ")
+//    @Override
+//    public <S extends Library_Transactions> S saveAndFlush(S entity) {
+//        return null;
+//    }
 
     @Override
     public <S extends Library_Transactions> List<S> saveAllAndFlush(Iterable<S> entities) {

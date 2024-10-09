@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +16,15 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class BookCopyRepository implements JpaRepository<Book_Copies, Integer> {
+public abstract class BookCopyRepository implements JpaRepository<Book_Copies, Integer> {
+
+    @Query("SELECT bc.copy_id from Book_Copies bc where bc.book_id = :book_id and bc.is_borrowed = false")
+    public int getAvailableCopyID(@Param("book_id") int book_id) ;
+
+    @Query("UPDATE Book_Copies SET is_borrowed =:borrowed_status where copy_id = :copy_id")
+    public void updateBorrowStatus(@Param("borrowed_status") boolean borrowed_status,@Param("copy_id") int copy_id);
+
+
     @Override
     public void flush() {
 
