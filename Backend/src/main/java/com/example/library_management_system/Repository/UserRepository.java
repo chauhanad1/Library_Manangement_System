@@ -17,166 +17,106 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class UserRepository implements JpaRepository<Users,Integer> {
+public interface UserRepository extends JpaRepository<Users,Integer> {
     @Override
-    public void flush() {
-
-    }
+    public void flush() ;
 
     @Modifying
-    @Query("UPDATE Users set borrowed_book_count = :borrowed_book_count where user_id = user_id")
+    @Query("UPDATE Users set borrowed_book_count = :borrowed_book_count where user_id =:user_id")
     public void changeBorrowCount(@Param("borrowed_book_count") int borrowed_book_count, @Param("user_id") int user_id);
 
     @Override
-    public <S extends Users> S saveAndFlush(S entity) {
-        return null;
-    }
+    public <S extends Users> S saveAndFlush(S entity) ;
 
     @Override
-    public <S extends Users> List<S> saveAllAndFlush(Iterable<S> entities) {
-        return null;
-    }
+    public <S extends Users> List<S> saveAllAndFlush(Iterable<S> entities) ;
 
     @Override
-    public void deleteAllInBatch(Iterable<Users> entities) {
-
-    }
+    public void deleteAllInBatch(Iterable<Users> entities) ;
 
     @Override
-    public void deleteAllByIdInBatch(Iterable<Integer> integers) {
-
-    }
+    public void deleteAllByIdInBatch(Iterable<Integer> integers) ;
 
     @Override
-    public void deleteAllInBatch() {
-
-    }
+    public void deleteAllInBatch() ;
 
     /**
      * @param integer
      * @deprecated
      */
     @Override
-    public Users getOne(Integer integer) {
-        return null;
-    }
+    public Users getOne(Integer integer) ;
 
     /**
      * @param integer
      * @deprecated
      */
     @Override
-    public Users getById(Integer integer) {
-        return null;
-    }
+    public Users getById(Integer integer) ;
 
     @Override
-    public Users getReferenceById(Integer integer) {
-        return null;
-    }
+    public Users getReferenceById(Integer integer) ;
 
     @Override
-    public <S extends Users> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
+    public <S extends Users> Optional<S> findOne(Example<S> example);
 
     @Override
-    public <S extends Users> List<S> findAll(Example<S> example) {
-        return null;
-    }
+    public <S extends Users> List<S> findAll(Example<S> example) ;
 
     @Override
-    public <S extends Users> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
-    }
+    public <S extends Users> List<S> findAll(Example<S> example, Sort sort) ;
 
     @Override
-    public <S extends Users> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
+    public <S extends Users> Page<S> findAll(Example<S> example, Pageable pageable) ;
 
     @Override
-    public <S extends Users> long count(Example<S> example) {
-        return 0;
-    }
+    public <S extends Users> long count(Example<S> example) ;
 
     @Override
-    public <S extends Users> boolean exists(Example<S> example) {
-        return false;
-    }
+    public <S extends Users> boolean exists(Example<S> example);
 
     @Override
-    public <S extends Users, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
-    }
+    public <S extends Users, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) ;
 
     @Override
-    public <S extends Users> S save(S entity) {
-        return null;
-    }
+    public <S extends Users> S save(S entity) ;
 
     @Override
-    public <S extends Users> List<S> saveAll(Iterable<S> entities) {
-        return null;
-    }
+    public <S extends Users> List<S> saveAll(Iterable<S> entities) ;
 
     @Override
-    public Optional<Users> findById(Integer integer) {
-        return Optional.empty();
-    }
+    public Optional<Users> findById(Integer integer);
 
     @Override
-    public boolean existsById(Integer integer) {
-        return false;
-    }
+    public boolean existsById(Integer integer);
 
     @Override
-    public List<Users> findAll() {
-        return null;
-    }
+    public List<Users> findAll() ;
 
     @Override
-    public List<Users> findAllById(Iterable<Integer> integers) {
-        return null;
-    }
+    public List<Users> findAllById(Iterable<Integer> integers) ;
 
     @Override
-    public long count() {
-        return 0;
-    }
+    public long count() ;
 
     @Override
-    public void deleteById(Integer integer) {
-
-    }
+    public void deleteById(Integer integer) ;
 
     @Override
-    public void delete(Users entity) {
-
-    }
+    public void delete(Users entity) ;
 
     @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
-
-    }
+    public void deleteAllById(Iterable<? extends Integer> integers) ;
 
     @Override
-    public void deleteAll(Iterable<? extends Users> entities) {
-
-    }
+    public void deleteAll(Iterable<? extends Users> entities) ;
 
     @Override
-    public void deleteAll() {
-
-    }
+    public void deleteAll() ;
 
     @Override
-    public List<Users> findAll(Sort sort) {
-        return null;
-    }
+    public List<Users> findAll(Sort sort) ;
 
     @Override
-    public Page<Users> findAll(Pageable pageable) {
-        return null;
-    }
+    public Page<Users> findAll(Pageable pageable) ;
 }

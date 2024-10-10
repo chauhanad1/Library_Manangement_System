@@ -18,15 +18,15 @@ import java.util.Optional;
 @Service
 public class BorrowedBookServiceImpl implements BorrowedService {
     @Autowired
-    private BookService bookservice;
+    private BookServiceImpl bookservice;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @Autowired
     private BorrowedBookRepository borrowedBookRepository;
     @Autowired
     private BookCopyRepository bookCopyRepository;
-    @Autowired
-    private Library_Transactions libraryTransactions;
+//    @Autowired
+//    private Library_Transactions libraryTransactions;
     @Autowired
     private LibraryTransaction librarytransactionrepository;
     Timestamp currentTimestamp = Timestamp.valueOf(LocalDateTime.now());
@@ -61,7 +61,7 @@ public class BorrowedBookServiceImpl implements BorrowedService {
                 userService.changeBorrowCount(borrowed_count+1,user_id);
 
                 //updating borrowed_books table
-                borrowedBookRepository.updateBorrowTable(currentTimestamp,null,copy_id,book_id);
+                borrowedBookRepository.save(new Borrowed_Books(user,bookCopy));
 
                 //updating Library Transaction table
                 Library_Transactions library_transactions = new Library_Transactions(user,bookCopy,Library_Transactions.Action.BORROW);
@@ -72,6 +72,7 @@ public class BorrowedBookServiceImpl implements BorrowedService {
     }
 
     @Override
+    @Transactional
     public void returnBook(int user_id, int copy_id) {
 
         Users user = userService.getUserbyID(user_id);
@@ -94,7 +95,7 @@ public class BorrowedBookServiceImpl implements BorrowedService {
         //set return date  in borrowed_books
         Borrowed_Books borrowedBooks =getBorrowedBooks(copy_id, user_id);
         borrowedBooks.setReturnDate(currentTimestamp);
-        borrowedBookRepository.updateBorrowTable(borrowedBooks.getBorrowDate(), borrowedBooks.getReturnDate(), copy_id,book_id);
+        borrowedBookRepository.updateBorrowTable(borrowedBooks.getReturnDate(), copy_id,book_id);
 
 
 

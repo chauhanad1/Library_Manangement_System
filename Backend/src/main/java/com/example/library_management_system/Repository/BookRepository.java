@@ -16,168 +16,108 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
-public class BookRepository implements JpaRepository<Books, Integer> {
+public interface BookRepository extends JpaRepository<Books, Integer> {
     @Override
-    public void flush() {
-
-    }
+    public void flush() ;
 
     @Modifying
     @Query("UPDATE Books set available_copies =:available_copies where book_id =:book_id")
     public void changeAvailableCopies(@Param("available_copies") int available_copies, @Param("book_id") int book_id);
     @Override
-    public <S extends Books> S saveAndFlush(S entity) {
-        return null;
-    }
-    @Query("SELECT b from books b join b.BookCopies bc where bc.copy_id =:copy_id")
+    public <S extends Books> S saveAndFlush(S entity) ;
+    @Query("SELECT b from Books b left join Book_Copies bc on b.id = bc.book.book_id where bc.copy_id =:copy_id")
     public Books getBookbyCopyId(@Param("copy_id") int copy_id);
 
 
     @Override
-    public <S extends Books> List<S> saveAllAndFlush(Iterable<S> entities) {
-        return null;
-    }
+    public <S extends Books> List<S> saveAllAndFlush(Iterable<S> entities) ;
 
     @Override
-    public void deleteAllInBatch(Iterable<Books> entities) {
-
-    }
+    public void deleteAllInBatch(Iterable<Books> entities) ;
 
     @Override
-    public void deleteAllByIdInBatch(Iterable<Integer> integers) {
-
-    }
+    public void deleteAllByIdInBatch(Iterable<Integer> integers) ;
 
     @Override
-    public void deleteAllInBatch() {
-
-    }
+    public void deleteAllInBatch() ;
 
     /**
      * @param integer
      * @deprecated
      */
     @Override
-    public Books getOne(Integer integer) {
-        return null;
-    }
+    public Books getOne(Integer integer) ;
 
     /**
      * @param integer
      * @deprecated
      */
     @Override
-    public Books getById(Integer integer) {
-        return null;
-    }
+    public Books getById(Integer integer) ;
 
     @Override
-    public Books getReferenceById(Integer integer) {
-        return null;
-    }
+    public Books getReferenceById(Integer integer) ;
 
     @Override
-    public <S extends Books> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
+    public <S extends Books> Optional<S> findOne(Example<S> example);
 
     @Override
-    public <S extends Books> List<S> findAll(Example<S> example) {
-        return null;
-    }
+    public <S extends Books> List<S> findAll(Example<S> example) ;
 
     @Override
-    public <S extends Books> List<S> findAll(Example<S> example, Sort sort) {
-        return null;
-    }
+    public <S extends Books> List<S> findAll(Example<S> example, Sort sort) ;
 
     @Override
-    public <S extends Books> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
+    public <S extends Books> Page<S> findAll(Example<S> example, Pageable pageable) ;
 
     @Override
-    public <S extends Books> long count(Example<S> example) {
-        return 0;
-    }
+    public <S extends Books> long count(Example<S> example) ;
 
     @Override
-    public <S extends Books> boolean exists(Example<S> example) {
-        return false;
-    }
+    public <S extends Books> boolean exists(Example<S> example);
 
     @Override
-    public <S extends Books, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
-    }
+    public <S extends Books, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) ;
 
     @Override
-    public <S extends Books> S save(S entity) {
-        return null;
-    }
+    public <S extends Books> S save(S entity) ;
 
     @Override
-    public <S extends Books> List<S> saveAll(Iterable<S> entities) {
-        return null;
-    }
+    public <S extends Books> List<S> saveAll(Iterable<S> entities) ;
 
     @Override
-    public Optional<Books> findById(Integer integer) {
-        return Optional.empty();
-    }
+    public Optional<Books> findById(Integer integer);
 
     @Override
-    public boolean existsById(Integer integer) {
-        return false;
-    }
+    public boolean existsById(Integer integer);
 
     @Override
-    public List<Books> findAll() {
-        return null;
-    }
+    public List<Books> findAll() ;
 
     @Override
-    public List<Books> findAllById(Iterable<Integer> integers) {
-        return null;
-    }
+    public List<Books> findAllById(Iterable<Integer> integers) ;
 
     @Override
-    public long count() {
-        return 0;
-    }
+    public long count() ;
 
     @Override
-    public void deleteById(Integer integer) {
-
-    }
+    public void deleteById(Integer integer) ;
 
     @Override
-    public void delete(Books entity) {
-
-    }
+    public void delete(Books entity) ;
 
     @Override
-    public void deleteAllById(Iterable<? extends Integer> integers) {
-
-    }
+    public void deleteAllById(Iterable<? extends Integer> integers) ;
 
     @Override
-    public void deleteAll(Iterable<? extends Books> entities) {
-
-    }
+    public void deleteAll(Iterable<? extends Books> entities) ;
 
     @Override
-    public void deleteAll() {
-
-    }
+    public void deleteAll() ;
 
     @Override
-    public List<Books> findAll(Sort sort) {
-        return null;
-    }
+    public List<Books> findAll(Sort sort) ;
 
     @Override
-    public Page<Books> findAll(Pageable pageable) {
-        return null;
-    }
+    public Page<Books> findAll(Pageable pageable) ;
 }

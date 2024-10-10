@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.awt.print.Book;
+ 
 
 @Entity
 @Data
@@ -19,7 +19,7 @@ public class Book_Copies {
     private int copy_id;
     @ManyToOne
     @JoinColumn(name = "book_id")
-    private Book book;
+    private Books book;
     @Column(name = "is_borrowed",nullable = false)
     private boolean is_borrowed;
 }

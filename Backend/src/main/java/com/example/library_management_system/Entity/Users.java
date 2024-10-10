@@ -25,7 +25,12 @@ public class Users {
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false)
-    private String role;
+    private ActionType role;
     @Column(name = "borrowed_book_count", nullable = false)
     private int borrowed_book_count ;
+
+    public enum ActionType{
+        USER,
+        ADMIN
+    }
 }
