@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 //import org.springframework.security.core.parameters.P;
 
 
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+@Repository
 public interface BorrowedBookRepository extends JpaRepository<Borrowed_Books, Integer> {
     @Override
     public void flush() ;

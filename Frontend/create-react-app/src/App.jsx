@@ -1,35 +1,27 @@
+import React from 'react'
+import {UserContext } from './contexts/UserContext'
+import LoginForm from './components/LoginForm'
+import UserDashboard from './components/UserDashboard'
+import AdminDashboar from './components/AdminDashboard'
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const {user} = React.useContext(UserContext);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className = "container mx-auto p-4">
+      <h1 className="text-2x1 font-bold mb-4"> Library Management System</h1>
+      {user ? (
+        user.role === 'ADMIN' ? <AdminDashboard /> : <UserDashboard />
+      ) : (
+      <LoginForm />
+      )
+    }
+    </div>
+  );
+};
 
 export default App
