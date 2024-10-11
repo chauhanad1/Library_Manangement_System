@@ -9,28 +9,50 @@ const UserDashboard = () => {
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const { user } = useUser();
+  console.log(useUser);
+  console.log(user);
   
   useEffect(() => {
+    if(user){
     fetchBooks();
     fetchBorrowedBooks();
+    }
   }, []);
   
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('/books');
-      setBooks(response.data);
+const response = await axios.get('http://localhost:8080/api/books');
+      if (Array.isArray(response.data)) {
+        setBooks(response.data);
+      } else {
+        console.error('Fetched data is not an array:', response.data);
+        setBooks([]);
+      }
     } catch (error) {
       console.error('Error fetching books:', error);
+      setBooks([]);
     }
   };
   
   const fetchBorrowedBooks = async () => {
-    // Implement this based on your API
+    try {
+const response = await axios.get(`http://localhost:8080/api/borrow/${user.user_id}`);
+      if (Array.isArray(response.data)) {
+        setBorrowedBooks(response.data);
+      } else {
+        console.error('Fetched borrowed books data is not an array:', response.data);
+        setBorrowedBooks([]);
+      }
+    } catch (error) {
+      console.error('Error fetching borrowed books:', error);
+      setBorrowedBooks([]);
+    }
   };
+
   
   const borrowBook = async (bookId) => {
     try {
-await axios.post(`/borrow/${bookId}/${user.id}`);
+await axios.post(`http://localhost:8080/api/borrow/${bookId}/${user.user_id}`);
       fetchBooks();
       fetchBorrowedBooks();
     } catch (error) {
@@ -40,7 +62,7 @@ await axios.post(`/borrow/${bookId}/${user.id}`);
   
   const returnBook = async (copyId) => {
     try {
-await axios.post(`/return/${copyId}/${user.id}`);
+await axios.post(`http://localhost:8080/api/return/${copyId}/${user.user_id}`);
       fetchBooks();
       fetchBorrowedBooks();
     } catch (error) {
@@ -106,10 +128,10 @@ const BorrowedBooks = ({ borrowedBooks, onReturn }) => (
         <TableBody>
           {borrowedBooks.map(borrowed => (
             <TableRow key={borrowed.borrow_id}>
-              <TableCell>{borrowed.bookcopy.book.title}</TableCell>
-              <TableCell>{new Date(borrowed.borrowDate).toLocaleDateString()}</TableCell>
+              <TableCell>{borrowed.title}</TableCell>
+              <TableCell>{new Date(borrowed.borrow_date).toLocaleDateString()}</TableCell>
               <TableCell>
-                <Button onClick={() => onReturn(borrowed.bookcopy.copy_id)}>
+                <Button onClick={() => onReturn(borrowed.copy_id)}>
                   Return
                 </Button>
               </TableCell>

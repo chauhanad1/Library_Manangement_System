@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -112,5 +113,10 @@ public class BorrowedBookServiceImpl implements BorrowedService {
     @Override
     public Borrowed_Books getBorrowedBooks(int copy_id, int user_id) {
         return borrowedBookRepository.getBorrowedBooks(copy_id, user_id);
+    }
+
+    @Override
+    public List<Object[]> getBorrowedBooksbyUserId(int userId) {
+        return borrowedBookRepository.getBorrowedBookbyUserId(userId);
     }
 }

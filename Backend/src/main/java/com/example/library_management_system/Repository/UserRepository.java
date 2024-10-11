@@ -25,6 +25,8 @@ public interface UserRepository extends JpaRepository<Users,Integer> {
     @Query("UPDATE Users set borrowed_book_count = :borrowed_book_count where user_id =:user_id")
     public void changeBorrowCount(@Param("borrowed_book_count") int borrowed_book_count, @Param("user_id") int user_id);
 
+    public Optional<Users> findByEmail(String email);
+
     @Override
     public <S extends Users> S saveAndFlush(S entity) ;
 

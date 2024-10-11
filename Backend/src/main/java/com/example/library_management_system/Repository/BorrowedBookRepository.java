@@ -1,5 +1,6 @@
 package com.example.library_management_system.Repository;
 
+import com.example.library_management_system.Entity.Books;
 import com.example.library_management_system.Entity.Borrowed_Books;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,11 @@ public interface BorrowedBookRepository extends JpaRepository<Borrowed_Books, In
     @Query("select b from Borrowed_Books b where b.bookcopy.copy_id =:copy_id and b.user.user_id =:user_id")
     public Borrowed_Books getBorrowedBooks(@Param("copy_id") int copy_id
                                            ,@Param("user_id") int user_id);
+
+    @Query("select bb.borrow_id, b.title,bb.borrowDate,bb.bookcopy.copy_id from Borrowed_Books bb " +
+            "JOIN Book_Copies bc ON bb.bookcopy.copy_id = bc.copy_id JOIN Books b on bc.book.book_id " +
+            "= b.book_id where bb.user.user_id =:userId and bb.returnDate IS NULL")
+    List<Object[]> getBorrowedBookbyUserId(@Param("userId") int userId);
 
     @Override
     public <S extends Borrowed_Books> S saveAndFlush(S entity) ;
