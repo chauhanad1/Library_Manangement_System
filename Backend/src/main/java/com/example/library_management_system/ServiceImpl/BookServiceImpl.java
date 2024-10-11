@@ -1,5 +1,6 @@
 package com.example.library_management_system.ServiceImpl;
 
+import com.example.library_management_system.Entity.Book_Copies;
 import com.example.library_management_system.Entity.Books;
 import com.example.library_management_system.Repository.BookCopyRepository;
 import com.example.library_management_system.Repository.BookRepository;
@@ -46,6 +47,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public void changeAvailableCopies(int available_copies, int book_id) {
         bookRepository.changeAvailableCopies(available_copies,book_id);
+    }
+
+    @Override
+    public Books saveBook(Books book) {
+        Books savedBook =  bookRepository.save(book);
+        for (int i = 0; i < book.getTotal_copies(); i++) {
+            Book_Copies bookCopy = new Book_Copies(book);
+            Book_Copies saveCopy = bookCopyRepository.save(bookCopy);
+        }
+        return savedBook;
+
     }
 
     @Override

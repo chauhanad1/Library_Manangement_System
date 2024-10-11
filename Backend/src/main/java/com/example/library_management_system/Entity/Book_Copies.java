@@ -22,4 +22,9 @@ public class Book_Copies {
     private Books book;
     @Column(name = "is_borrowed",nullable = false)
     private boolean is_borrowed;
+
+    public Book_Copies(Books book){
+        this.book = book;
+        this.is_borrowed = false;
+    }
 }

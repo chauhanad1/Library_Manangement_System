@@ -24,7 +24,7 @@ public class Library_Transactions {
     @ManyToOne
     @JoinColumn(name = "copy_id")
     private Book_Copies bookCopies;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Action action;
     @Column(name = "timestamp", nullable = false, updatable = false)

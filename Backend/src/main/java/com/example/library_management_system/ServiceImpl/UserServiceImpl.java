@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
     public void changeBorrowCount(int borrowed_book_count, int user_id) {
         userRepository.changeBorrowCount(borrowed_book_count,user_id);
     }
+
+    @Override
+    public Users saveUser(Users user) {
+        return userRepository.save(user);
+    }
 }

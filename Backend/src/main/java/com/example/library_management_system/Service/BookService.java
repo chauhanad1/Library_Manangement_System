@@ -13,5 +13,7 @@ public interface BookService {
     void changeBorrowStatus(boolean borrowed_status, int copy_id);
     void changeAvailableCopies(int available_copies, int book_id);
 
+    Books saveBook(Books book);
+
     Books getBookbyCopyId(int copy_id);
 }

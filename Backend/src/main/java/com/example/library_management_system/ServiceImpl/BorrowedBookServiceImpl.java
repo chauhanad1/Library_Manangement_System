@@ -89,7 +89,7 @@ public class BorrowedBookServiceImpl implements BorrowedService {
         bookservice.changeAvailableCopies(available_copies+1,book_id);
 
 
-        // change is_borrowed status in bookcopy
+        // change is_borrowed status in book copy
         bookservice.changeBorrowStatus(false,copy_id);
 
         //set return date  in borrowed_books
