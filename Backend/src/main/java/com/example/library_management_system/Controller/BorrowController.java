@@ -33,7 +33,9 @@ public class BorrowController {
             bookMap.put("copy_id", record[3]);
             return bookMap;
         }).toList();
-
+        if(response.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(response);
 
     }

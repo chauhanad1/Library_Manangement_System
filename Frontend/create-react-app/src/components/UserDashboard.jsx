@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
  
 const UserDashboard = () => {
+
+  // defining states
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [alertMessage, setAlertMessage] = useState(null);
   const { user } = useUser();
-  console.log(useUser);
-  console.log(user);
   
+
+  
+  // fetching apis when component will mount
   useEffect(() => {
     if(user){
     fetchBooks();
@@ -19,9 +23,11 @@ const UserDashboard = () => {
     }
   }, []);
   
+  // actual fetching code
+  const baseurl = 'http://localhost:8080/api/'
   const fetchBooks = async () => {
     try {
-const response = await axios.get('http://localhost:8080/api/books');
+const response = await axios.get(baseurl+'books');
       if (Array.isArray(response.data)) {
         setBooks(response.data);
       } else {
@@ -36,7 +42,7 @@ const response = await axios.get('http://localhost:8080/api/books');
   
   const fetchBorrowedBooks = async () => {
     try {
-const response = await axios.get(`http://localhost:8080/api/borrow/${user.user_id}`);
+const response = await axios.get(baseurl+`borrow/${user.user_id}`);
       if (Array.isArray(response.data)) {
         setBorrowedBooks(response.data);
       } else {
@@ -51,18 +57,28 @@ const response = await axios.get(`http://localhost:8080/api/borrow/${user.user_i
 
   
   const borrowBook = async (bookId) => {
+    const book = books.find(b => b.book_id === bookId);
+    if(book.available_copies === 0){
+      setAlertMessage('no Available copies to borrow');
+      return;
+    }
     try {
-await axios.post(`http://localhost:8080/api/borrow/${bookId}/${user.user_id}`);
+await axios.post(baseurl+`borrow/${bookId}/${user.user_id}`);
+      setAlertMessage(null);
       fetchBooks();
       fetchBorrowedBooks();
     } catch (error) {
+      if(error.response && error.response.status === 400){
+        setAlertMessage('Maximum borrow limit reached.');
+        alert('Maximum borrow limit reached.');
+      }
       console.error('Error borrowing book:', error);
     }
   };
   
   const returnBook = async (copyId) => {
     try {
-await axios.post(`http://localhost:8080/api/return/${copyId}/${user.user_id}`);
+await axios.post(baseurl+`return/${copyId}/${user.user_id}`);
       fetchBooks();
       fetchBorrowedBooks();
     } catch (error) {

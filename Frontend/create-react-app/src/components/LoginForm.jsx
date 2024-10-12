@@ -42,11 +42,12 @@ const response = await fetch('http://localhost:8080/api/login', {
       } else {
         // If login fails, display appropriate error message
         setError(data.message || 'Login failed. Please try again.');
-        alert(data.message || 'Login failed. Please check your credentials.');
+        alert('Login failed. Please check your credentials.' || data.message);
       }
     } catch (error) {
       // Catch network or other errors
       setError('An error occurred. Please try again.');
+      alert('Login failed. Please check your credentials.' || data.message);
     }
   };
 

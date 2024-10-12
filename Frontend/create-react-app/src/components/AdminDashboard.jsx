@@ -19,13 +19,21 @@ const AdminDashboard = () => {
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  const baseurl = 'http://localhost:8080/api/'
   
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('/books');
-      setBooks(response.data);
+const response = await axios.get(baseurl+'books');
+      if (Array.isArray(response.data)) {
+        setBooks(response.data);
+      } else {
+        console.error('Fetched data is not an array:', response.data);
+        setBooks([]);
+      }
     } catch (error) {
       console.error('Error fetching books:', error);
+      setBooks([]);
     }
   };
   
@@ -40,7 +48,7 @@ const AdminDashboard = () => {
   const addBook = async (e) => {
     e.preventDefault();
     try {
-await axios.post('/books/add', {
+await axios.post(baseurl+'books/add', {
         ...newBook,
         published_year: parseInt(newBook.published_year),
         total_copies: parseInt(newBook.total_copies),
