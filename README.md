@@ -49,3 +49,20 @@ export default {
   tailwind - https://tailwindcss.com/docs.
   shadcn -  https://ui.shadcn.com/docs/installation/vite
 
+  FrontEnd snippet - ![image](https://github.com/user-attachments/assets/1412575b-6caa-4ea3-a806-17ff91a06e1e)
+  Admin Dashboard - ![image](https://github.com/user-attachments/assets/c99d19de-7feb-4c75-833e-71427dc3e990)
+  User Dashboard - ![image](https://github.com/user-attachments/assets/e5f796f6-3fc6-4eb4-86a2-8e32cbadbe3f)
+
+
+
+
+ # ToDos 
+ 
+ * JWT token password authentication is not completly implemented. As of now It is directly verifying the password from database.
+ * Backend Code can be optimised further
+ * need to add option to add users for admin user.
+ * need to add sign up facility for users.
+ * Exception handling can be improved with custom exception handlers
+ 
+
+
