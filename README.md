@@ -62,7 +62,11 @@ export default {
  * Backend Code can be optimised further
  * need to add option to add users for admin user.
  * need to add sign up facility for users.
- * Exception handling can be improved with custom exception handlers
+ * Exception handling can be improved with custom exception handlers.
+ * Loggers should be added
+ * pagination can be added in getAllBooks for large datasets.
+ * Custom  DTOs can be used for response.
+ * can add indexes for better optimization of queries.
  
 
 
